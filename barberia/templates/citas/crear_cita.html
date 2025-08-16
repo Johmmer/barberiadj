@@ -1,0 +1,68 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %}Citas{% endblock title %}
+{% block style %} <link rel="stylesheet" href="{% static 'css/citas/form-styles.css' %}"> {% endblock %}
+{% block content %}
+
+<div class="form-container">
+    <div class="form-wrapper">
+        <form class="" method="POST">
+            {% csrf_token %}
+            {{ form.media }}
+            <h2 class="form-title title">Agendar Cita</h2>
+            {{ form.as_p }}
+            <div class="btn-container">
+                <button type="submit" class="btn btn-primary subtitle">Guardar</button>
+                <button class="btn btn-secondary subtitle" onclick="history.back()" >Volver</button>
+            </div>
+        </form>
+        <div class="form-decoration">✂️</div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block script %}
+<script>
+    // Configurar fecha mínima (hoy)
+    document.addEventListener('DOMContentLoaded', function() {
+        const fechaInput = document.getElementById('fechaHora');
+        const ahora = new Date();
+        
+        // Formatear fecha para input datetime-local
+        const año = ahora.getFullYear();
+        const mes = String(ahora.getMonth() + 1).padStart(2, '0');
+        const dia = String(ahora.getDate()).padStart(2, '0');
+        const hora = String(ahora.getHours()).padStart(2, '0');
+        const minutos = String(ahora.getMinutes()).padStart(2, '0');
+        
+        const fechaMinima = `${año}-${mes}-${dia}T${hora}:${minutos}`;
+        fechaInput.min = fechaMinima;
+    });
+
+    // Formateo automático del teléfono
+    document.getElementById('telefonoCliente').addEventListener('input', function(e) {
+        let valor = e.target.value.replace(/\D/g, '');
+        
+        if (valor.length >= 6) {
+            valor = valor.substring(0, 3) + '-' + valor.substring(3, 6) + '-' + valor.substring(6, 10);
+        } else if (valor.length >= 3) {
+            valor = valor.substring(0, 3) + '-' + valor.substring(3);
+        }
+        
+        e.target.value = valor;
+        });
+
+    // Validación en tiempo real
+    document.querySelectorAll('.form-control').forEach(campo => {
+        campo.addEventListener('blur', function() {
+            if (this.hasAttribute('required') && !this.value.trim()) {
+                this.classList.add('is-invalid');
+                this.classList.remove('is-valid');
+            } else if (this.value.trim()) {
+                this.classList.add('is-valid');
+                this.classList.remove('is-invalid');
+            }
+        });
+    });
+</script>
+{% endblock %}

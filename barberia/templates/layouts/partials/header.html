@@ -1,0 +1,14 @@
+{% load static %}
+
+
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo subtitle-italic">BARBERÍA PREMIUM</div>
+            <ul class="nav-links title">
+                <li><a href="{% url 'index' %}">Inicio</a></li>
+                <li><a href="{% url 'citas' %}">Citas</a></li>
+                <li><a href="{% url 'contacto' %}">Contacto</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </nav>
+    </header>

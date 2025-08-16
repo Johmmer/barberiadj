@@ -1,0 +1,86 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %}Inicio{% endblock %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section id="inicio" class="hero">
+    <div class="hero-content">
+        <h1 class="bold-title">BARBERÍA</h1>
+        <p class="text">Ofrecemos una variedad de servicios de barbería para que luzcas siempre bien.</p>
+        <div class="address" class="text">📍 Calle 123, #1 - Santo Domingo</div>
+        <a href="{% url 'citas' %}" class="cta-button subtitle">Reservar Cita</a>
+    </div>
+    <div class="tools-decoration">✂️</div>
+</section>
+
+<section id="servicios" class="services">
+    <div class="container">
+        <h2 class="section-title title">Nuestros Servicios</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">✂️</div>
+                <h3 class="subtitle">Corte Clásico</h3>
+                <p class="text">Cortes tradicionales y modernos realizados por expertos barberos con años de experiencia.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🪒</div>
+                <h3 class="subtitle">Afeitado Premium</h3>
+                <p class="text">Afeitado profesional con navaja y productos de alta calidad para una experiencia única.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💼</div>
+                <h3 class="subtitle">Arreglo de Barba</h3>
+                <p class="text">Diseño y mantenimiento de barba con técnicas profesionales y productos premium.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">✨</div>
+                <h3 class="subtitle">Tratamientos</h3>
+                <p class="text">Tratamientos faciales y capilares para el cuidado integral del cabello y la piel.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">👔</div>
+                <h3 class="subtitle">Estilo Ejecutivo</h3>
+                <p class="text">Cortes y arreglos especiales para ejecutivos y eventos importantes.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🎯</div>
+                <h3 class="subtitle">Asesoría de Imagen</h3>
+                <p class="text">Consultoría personalizada para encontrar el estilo que mejor se adapte a ti.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contacto" class="contact">
+    <div class="container">
+        <h2 class="section-title title">Contáctanos</h2>
+        <div class="contact-info">
+            <div class="contact-item">
+                <div class="service-icon">📞</div>
+                <h3 class="subtitle">Teléfono</h3>
+                <p class="text">123456789</p>
+            </div>
+            <div class="contact-item">
+                <div class="service-icon">📍</div>
+                <h3 class="subtitle">Dirección</h3>
+                <p class="text">Calle 123, #1<br>Santo Domingo</p>
+            </div>
+            <div class="contact-item">
+                <div class="service-icon">🕒</div>
+                <h3 class="subtitle">Horarios</h3>
+                <p class="text">Lun - Sáb: 8:00 AM - 8:00 PM<br>Dom: 10:00 AM - 6:00 PM</p>
+            </div>
+        </div>
+        <div style="margin-top: 60px;">
+            <a href="{% url 'citas' %}" class="cta-button subtitle">Agendar Cita</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+

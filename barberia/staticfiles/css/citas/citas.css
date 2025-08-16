@@ -1,0 +1,483 @@
+        :root {
+            --gold-primary: #d4af37;
+            --gold-secondary: #f4d03f;
+            --dark-primary: #1a1a1a;
+            --dark-secondary: #2d2d2d;
+            --white: beige;
+            --gray-light: rgba(255, 255, 255, 0.1);
+            --gray-medium: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: var(--dark-primary);
+            color: var(--white);
+        }
+
+        /* Estilos base para la página de citas */
+        .citas-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--dark-primary) 0%, var(--dark-secondary) 100%);
+            color: var(--white);
+            padding-top: 120px; /* Espacio para el header fijo */
+            padding-bottom: 80px;
+        }
+
+        /* Contenedor principal */
+        .citas-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        /* Título principal */
+        .citas-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--gold-primary), var(--white));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .citas-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(45deg, var(--gold-primary), var(--gold-secondary));
+            border-radius: 2px;
+        }
+
+        /* Subtítulo */
+        .citas-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 60px;
+            opacity: 0.9;
+            color: var(--gray-medium);
+        }
+
+        /* Grid principal de dos columnas */
+        .citas-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: 80px;
+        }
+
+        /* Sección de agendar cita */
+        .agendar-seccion {
+            background: var(--gray-light);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .agendar-seccion::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.05), transparent);
+            transform: rotate(45deg);
+            pointer-events: none;
+        }
+
+        .seccion-titulo {
+            font-size: 2rem;
+            color: var(--gold-primary);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .seccion-titulo::before {
+            content: "📅";
+            font-size: 2.5rem;
+        }
+
+        /* Estilos para la nueva sección de agendar */
+        .agendar-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .agendar-descripcion {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            text-align: center;
+        }
+
+        .servicios-lista {
+            margin-bottom: 40px;
+        }
+
+        .servicios-titulo {
+            font-size: 1.3rem;
+            color: var(--gold-primary);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .servicios-items {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .servicios-items li {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 12px 15px;
+            border-radius: 8px;
+            border-left: 3px solid var(--gold-primary);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .servicios-items li:hover {
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateX(5px);
+        }
+
+        /* Botón de crear cita como enlace */
+        .crear-cita-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(45deg, var(--gold-primary), var(--gold-secondary));
+            color: var(--dark-primary);
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 20px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .crear-cita-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.4);
+            background: linear-gradient(45deg, var(--gold-secondary), var(--gold-primary));
+        }
+
+        .crear-cita-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Sección de consultar estado */
+        .consultar-seccion {
+            background: var(--gray-light);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .consultar-seccion::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.05), transparent);
+            transform: rotate(-45deg);
+            pointer-events: none;
+        }
+
+        .consultar-seccion .seccion-titulo::before {
+            content: "🔍";
+        }
+
+        /* Input y botón de consulta en línea */
+        .consulta-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .codigo-input {
+            flex: 1;
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+            color: var(--white);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .codigo-input:focus {
+            outline: none;
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .consultar-btn {
+            padding: 15px 25px;
+            background: linear-gradient(45deg, var(--gold-primary), var(--gold-secondary));
+            color: var(--dark-primary);
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .consultar-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Sección de contacto */
+        .contacto-seccion {
+            background: var(--gray-light);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .contacto-seccion .seccion-titulo {
+            justify-content: center;
+        }
+
+        .contacto-seccion .seccion-titulo::before {
+            content: "📞";
+        }
+
+        .telefono-numero {
+            font-size: 1.5rem;
+            color: var(--gold-primary);
+            font-weight: bold;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .contacto-texto {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* Aviso importante */
+        .aviso-importante {
+            background: linear-gradient(45deg, rgba(212, 175, 55, 0.1), rgba(244, 208, 63, 0.1));
+            border: 2px solid var(--gold-primary);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 50px;
+            text-align: center;
+            position: relative;
+        }
+
+        .aviso-importante::before {
+            content: "⚠️";
+            font-size: 2rem;
+            position: absolute;
+            top: -28px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0 10px;
+        }
+
+        .aviso-texto {
+            color: var(--gold-primary);
+            font-weight: 600;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-top: 10px;
+        }
+
+        /* Animaciones */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .agendar-seccion,
+        .consultar-seccion,
+        .contacto-seccion {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .consultar-seccion {
+            animation-delay: 0.2s;
+            animation-fill-mode: both;
+        }
+
+        .contacto-seccion {
+            animation-delay: 0.4s;
+            animation-fill-mode: both;
+        }
+
+        /* Responsive Design */
+
+        /* Tablets */
+        @media (max-width: 992px) {
+            .citas-container {
+                padding: 0 20px;
+            }
+            
+            .citas-title {
+                font-size: 3rem;
+            }
+            
+            .citas-grid {
+                gap: 40px;
+            }
+            
+            .agendar-seccion,
+            .consultar-seccion {
+                padding: 30px;
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .citas-page {
+                padding-top: 100px;
+                padding-bottom: 60px;
+            }
+            
+            .citas-container {
+                padding: 0 15px;
+            }
+            
+            .citas-title {
+                font-size: 2.5rem;
+                margin-bottom: 15px;
+            }
+            
+            .citas-subtitle {
+                font-size: 1.1rem;
+                margin-bottom: 40px;
+            }
+            
+            .citas-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                margin-top: 50px;
+            }
+            
+            .agendar-seccion,
+            .consultar-seccion,
+            .contacto-seccion {
+                padding: 25px 20px;
+            }
+            
+            .seccion-titulo {
+                font-size: 1.7rem;
+                margin-bottom: 25px;
+            }
+            
+            .consulta-group {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .consultar-btn {
+                width: 100%;
+                padding: 15px;
+            }
+            
+            .aviso-importante {
+                padding: 20px 15px;
+                margin-top: 30px;
+            }
+            
+            .aviso-texto {
+                font-size: 1rem;
+            }
+        }
+
+        /* Small mobile */
+        @media (max-width: 480px) {
+            .citas-title {
+                font-size: 2rem;
+            }
+            
+            .agendar-seccion,
+            .consultar-seccion,
+            .contacto-seccion {
+                padding: 20px 15px;
+            }
+            
+            .seccion-titulo {
+                font-size: 1.5rem;
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            
+            .form-input,
+            .codigo-input {
+                padding: 12px 15px;
+            }
+            
+            .crear-cita-btn {
+                padding: 15px;
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Efectos hover mejorados para desktop */
+        @media (min-width: 1024px) {
+            .agendar-seccion:hover,
+            .consultar-seccion:hover,
+            .contacto-seccion:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
+                border-color: var(--gold-primary);
+                transition: all 0.3s ease;
+            }
+            
+            .form-input:hover {
+                border-color: rgba(212, 175, 55, 0.6);
+            }
+            
+            .codigo-input:hover {
+                border-color: rgba(212, 175, 55, 0.6);
+            }
+        }

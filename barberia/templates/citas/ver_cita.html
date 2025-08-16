@@ -1,0 +1,137 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block style %} <link rel="stylesheet" href="{% static 'css/citas/estado-cita-styles.css' %}"> {% endblock style %}
+{% block title %}Citas{% endblock title %}
+
+{% block content %}
+    {% for citas in cita %}
+    <div class="cita-container"> 
+        <div class="cita-wrapper">
+            <h2 class="cita-title title">Informacion de la cita</h2>
+            <div class="cita-info-card">
+                <div class="codigo-cita">
+                    <div class="detail-label subtitle">Código de Cita</div>
+                    <div class="detail-value title">{{ citas.identificador }}</div>
+                </div>
+            </div>
+
+            <div class="cita-info-card">
+                <div class="cita-details-grid">
+                    <div class="detail-item">
+                        <div class="detail-label subtitle">Fecha</div>
+                        <div class="detail-value text">{{ citas.fecha }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label subtitle">Barbero</div>
+                        <div class="detail-value text">{{ citas.barbero }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label subtitle">Servicio</div>
+                        <div class="detail-value text">{{ citas.servicio }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="cita-info-card">
+                <div class="cita-details-grid">
+                    <div class="detail-item">
+                        <div class="detail-label subtitle">Cliente</div>
+                        <div class="detail-value text">{{ citas.cliente_nombre }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label subtitle">Teléfono</div>
+                        <div class="detail-value text">{{ citas.cliente_telefono }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label subtitle">Estado</div>
+                        <div class="detail-value text">
+                            <span class="estado-badge {{ citas.estado }}">{{ citas.estado }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons subtitle">
+                <a href="{% url 'editar_cita' citas.pk %}" class="bttn bttn-edit">Editar Cita</a>
+                <a href="{% url 'cancelar_cita' citas.pk %}" class="bttn bttn-cancel">Cancelar Cita</a>
+                <a href="{% url 'citas' %}" class="bttn bttn-back">Volver</a>
+            </div>
+
+            <div class="cita-decoration">💈</div>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        // Animación de entrada al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Añadir efecto de entrada a las cards
+            const cards = document.querySelectorAll('.cita-info-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${0.2 + (index * 0.2)}s`;
+            });
+            
+            // Opcional: cambiar estado dinámicamente
+            const estadoBadge = document.querySelector('.estado-badge');
+        });
+
+        // Efecto de hover en los detalles
+        document.querySelectorAll('.detail-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.classList.add('highlight');
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.classList.remove('highlight');
+            });
+        });
+
+        // Copiar código de cita al hacer clic
+        document.querySelector('.codigo-cita .detail-value').addEventListener('click', function() {
+            const codigo = this.textContent;
+            
+            // Intentar copiar al portapapeles
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(codigo).then(() => {
+                    // Mostrar feedback visual
+                    const originalText = this.textContent;
+                    this.textContent = '¡Copiado!';
+                    this.style.background = 'linear-gradient(45deg, #28a745, #4caf50)';
+                    
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.style.background = 'linear-gradient(45deg, #d4af37, #f4d03f)';
+                    }, 1500);
+                });
+            } else {
+                // Fallback para navegadores más antiguos
+                const textArea = document.createElement('textarea');
+                textArea.value = codigo;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                alert('Código copiado: ' + codigo);
+            }
+        });
+
+        // Añadir tooltips informativos
+        document.querySelector('.codigo-cita .detail-value').title = 'Haz clic para copiar el código';
+
+        // Smooth scroll para mejor UX en móviles
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

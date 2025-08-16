@@ -1,0 +1,79 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %}Citas{% endblock title %}
+{% block style %} <link rel="stylesheet" href="{% static 'css/citas/citas.css' %}"> {% endblock style %}
+{% block content %}
+
+<div class="citas-page">
+    <div class="citas-container">
+        <!-- Título principal -->
+        <h1 class="citas-title title">Citas</h1>
+        <p class="citas-subtitle subtitle">Gestiona tus citas de barbería fácilmente.</p>
+
+        <div class="citas-grid">
+            <!-- Sección para agendar cita -->
+            <div class="agendar-seccion">
+                <h2 class="seccion-titulo subtitle">Agende su cita aquí con tiempo</h2>
+                    
+                <div class="agendar-content">
+                    <p class="agendar-descripcion text">
+                        Reserve su cita de manera rápida y sencilla. Seleccione el servicio que desea, 
+                        la fecha y hora que mejor le convenga, y reciba confirmación inmediata.
+                    </p>
+                    
+                    <!-- Botón para ir al formulario -->
+                    <a href="{% url 'crear_cita' %}" class="crear-cita-btn subtitle" id="ir-formulario-btn">
+                        📅 Agendar Nueva Cita
+                    </a>
+                </div>
+            </div>
+
+            <div class="consultar-seccion">
+                <h2 class="seccion-titulo subtitle">¿Ya tiene una cita agendada? Confirme el estado de su cita con el código proporcionado.</h2>
+                    
+                <div class="consulta-group">
+                    <form method="GET" action="{% url 'ver_cita' %}">
+                        <input type="text" name="identificador" class="codigo-input text" placeholder="Introduzca su codigo" autocomplete="off" maxlength="10" required>
+                        <button type="submit" class="consultar-btn subtitle">Ver Estado De La Cita</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="contacto-seccion">
+            <h2 class="seccion-titulo subtitle">¿Tiene algún problema al agendar o consultar su cita?, contacte a este número</h2>
+            <div class="telefono-numero subtitle-italic">📞 123456789</div>
+            <p class="contacto-texto text">Estamos disponibles de lunes a sábado de 8:00 AM a 8:00 PM<br>
+            Domingos de 10:00 AM a 6:00 PM</p>
+        </div>
+
+        <div class="aviso-importante">
+            <p class="aviso-texto text">Las citas solo deben agendarse mediante la página. Si no tiene ningún problema con la página, agende su cita y espere la confirmación del barbero.</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+    // Funcionalidad para el botón de ir al formulario
+    document.getElementById('ir-formulario-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        // Por ahora, simulación:
+        alert('Redirigiendo al formulario de citas...');
+        console.log('URL de destino: /citas/crear/');
+    });
+
+    // Validación de formulario mejorada (si hay formularios)
+    document.querySelectorAll('.form-input').forEach(input => {
+        input.addEventListener('blur', function() {
+            if (this.hasAttribute('required') && !this.value.trim()) {
+                this.style.borderColor = '#ff6b6b';
+            } else {
+                this.style.borderColor = 'rgba(212, 175, 55, 0.3)';
+            }
+        });
+    });
+</script>
+{% endblock script %}

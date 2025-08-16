@@ -1,0 +1,180 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %}Contacto{% endblock %}
+{% block  style %} <link rel="stylesheet" href="{% static 'css/citas/contacto-styles.css' %}"> {% endblock  %}
+{% block content %}
+    <!-- Decorative elements -->
+    <div class="decoration left">💈</div>
+    <div class="decoration right">✂️</div>
+
+    <!-- Main container -->
+    <div class="contact-container">
+        <!-- Page title -->
+        <h1 class="page-title title">Contáctanos</h1>
+        <p class="page-subtitle">Si tienes alguna pregunta o necesitas ayuda, no dudes en contactarnos.</p>
+
+        <!-- Contact grid -->
+        <div class="contact-grid">
+            <!-- Phone -->
+            <div class="contact-card">
+                <div class="contact-icon"><i class="bi bi-telephone-fill"></i></div>
+                <h3>Teléfono</h3>
+                <div class="contact-info">
+                    <a href="tel:123456789">123456789</a>
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="contact-card">
+                <div class="contact-icon"><i class="bi bi-envelope"></i></div>
+                <h3>Email</h3>
+                <div class="contact-info">
+                    <a href="mailto:barberia@email.com">barberia@email.com</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social media section -->
+        <div class="social-section">
+            <h3>También puedes seguirnos en nuestras redes sociales</h3>
+            <p>Mantente al día con nuestras últimas ofertas y promociones</p>
+            <div class="social-links">
+                <a href="#" class="social-link" title="Instagram" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="social-link" title="Facebook" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="social-link" title="WhatsApp" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+                <a href="#" class="social-link" title="Twitter" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+            </div>
+        </div>
+
+        <!-- Location section -->
+        <div class="location-section">
+            <h3><i class="bi bi-geo-alt-fill"></i> Estamos ubicados en:</h3>
+            <div class="location-info">
+                <div class="location-item">
+                    <h4>Dirección</h4>
+                    <p>Calle 123, #1<br>Santo Domingo</p>
+                </div>
+                <div class="location-item">
+                    <h4>Horario</h4>
+                    <p>
+                        <strong>Lunes a Sábado:</strong><br>
+                        9:00 AM - 6:00 PM<br><br>
+                        <strong>Domingo:</strong><br>
+                        10:00 AM - 5:00 PM
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    // Agregar efectos de partículas flotantes
+    function createFloatingParticle() {
+        const container = document.body;
+        const particle = document.createElement('div');
+        
+        particle.style = `
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: #d4af37;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.2;
+            left: ${Math.random() * 100}%;
+            top: 100%;
+            z-index: -1;
+            animation: floatUp ${8 + Math.random() * 4}s linear forwards;
+        `;
+        
+        container.appendChild(particle);
+        
+        setTimeout(() => {
+            particle.remove();
+        }, 12000);
+    }
+
+    // Crear partículas cada 3 segundos
+    setInterval(createFloatingParticle, 3000);
+
+    // Agregar animación para partículas flotantes
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes floatUp {
+            to {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Agregar efectos hover a las tarjetas de contacto
+    document.querySelectorAll('.contact-card').forEach((card, index) => {
+        card.addEventListener('mouseenter', () => {
+            card.style.animationDelay = '0s';
+        });
+    });
+
+    // Agregar efectos de pulsación a los enlaces sociales
+    document.querySelectorAll('.social-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Crear efecto de pulsación
+            const ripple = document.createElement('div');
+            ripple.style = `
+                position: absolute;
+                width: 100px;
+                height: 100px;
+                background: rgba(212, 175, 55, 0.3);
+                border-radius: 50%;
+                transform: scale(0);
+                animation: ripple 0.6s ease-out;
+                pointer-events: none;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%) scale(0);
+            `;
+            
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+
+    // Agregar animación de ripple
+    const rippleStyle = document.createElement('style');
+    rippleStyle.textContent = `
+        @keyframes ripple {
+            to {
+                transform: translate(-50%, -50%) scale(2);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(rippleStyle);
+
+    // Agregar efecto de escritura al título
+    document.addEventListener('DOMContentLoaded', function() {
+        const title = document.querySelector('.page-title');
+        const subtitle = document.querySelector('.page-subtitle');
+        
+        // Efecto de aparición secuencial
+        setTimeout(() => {
+            title.style.opacity = '1';
+            title.style.transform = 'translateY(0)';
+        }, 300);
+        
+        setTimeout(() => {
+            subtitle.style.opacity = '1';
+            subtitle.style.transform = 'translateY(0)';
+        }, 600);
+    });
+</script>
+{% endblock %}

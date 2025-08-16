@@ -1,0 +1,85 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %}Cancelar Cita{% endblock title %}
+{% block style %} <link rel="stylesheet" href="{% static 'css/citas/cancelar-cita-styles.css' %}"> {% endblock style %}
+{% block content %}
+
+<div class="cancel-container">
+    <!-- Decorative elements -->
+    <div class="decoration left">✂️</div>
+    <div class="decoration right">🪒</div>
+    
+    <!-- Icon -->
+    <div class="cancel-icon">❓</div>
+    
+    <!-- Title -->
+    <h1 class="cancel-title title">¿Cancelar Cita?</h1>
+    
+    <!-- Subtitle -->
+    <p class="cancel-subtitle text">({{ cita }}) - ¿Estás seguro de que deseas cancelar tu cita? Esta acción no se puede deshacer.</p>
+    
+    <!-- Buttons -->
+    <form method="POST">
+        {% csrf_token %}        
+        <div class="button-container subtitle">
+            <button class="cancel-btn btn-confirm" type="submit">
+                Sí, cancelar cita
+            </button>
+            <button class="cancel-btn btn-back" onclick="window.history.back()">
+                No, volver
+            </button>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    function goBack() {
+        // Volver a la página anterior
+        window.history.back();
+    }
+
+    // Agregar efecto de partículas flotantes
+    function createFloatingParticle() {
+        const container = document.body;
+        const particle = document.createElement('div');
+        
+        particle.style = `
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: #d4af37;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.3;
+            left: ${Math.random() * 100}%;
+            top: 100%;
+            z-index: -1;
+            animation: floatUp ${5 + Math.random() * 5}s linear forwards;
+        `;
+        
+        container.appendChild(particle);
+        
+        setTimeout(() => {
+            particle.remove();
+        }, 10000);
+    }
+
+    // Crear partículas periódicamente
+    setInterval(createFloatingParticle, 3000);
+
+    // Agregar animación CSS para las partículas
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes floatUp {
+            to {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+{% endblock %}

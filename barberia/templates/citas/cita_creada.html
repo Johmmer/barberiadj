@@ -1,0 +1,274 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %}Citas{% endblock title %}
+{% block style %} <link rel="stylesheet" href="{% static 'css/citas/cita-creada-styles.css' %}"> {% endblock style %}
+{% block content %}
+    <!-- Main container -->
+    <div class="codigo-container" style="margin-top: 100px; margin-bottom: 50px;">
+        <!-- Decorative elements -->
+        <div class="decoration left">💈</div>
+        <div class="decoration right">✂️</div>
+        
+        <!-- Icon -->
+        <div class="codigo-icon">🎫</div>
+        
+        <!-- Title -->
+        <h1 class="codigo-title">Tu Código de Cita</h1>
+        
+        <!-- Subtitle -->
+        <p class="codigo-subtitle">Guarda este código para verificar el estado de tu cita</p>
+        
+        <!-- Code display -->
+        <div class="codigo-display">
+            <div class="codigo-value" id="codigoCita">{{ cita.identificador }}</div>
+            <div class="codigo-label">Código de Reserva</div>
+        </div>
+        
+        <!-- Copy button -->
+        <button class="barberia-copy-btn" id="copyBtn">
+            <span id="btnText">📋 Copiar Código</span>
+        </button>
+        
+        <!-- Instructions -->
+        <div class="instructions">
+            <h3>💡 Instrucciones</h3>
+            <p>Conserva este código para consultar el estado de tu cita y saber si fue aceptada por el barbero. Ademas, es recomendable tomar una captura de pantalla en caso de que el barbero la solicite</p>
+        </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div class="barberia-toast" id="toast">
+        <div class="barberia-toast-content">
+            <span>✓</span>
+            <span>Código copiado al portapapeles</span>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    console.log('hola')
+    // Event listener para el botón de copiar
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM cargado - Barbería Premium');
+        const copyBtn = document.getElementById('copyBtn');
+        if (copyBtn) {
+            console.log('Botón encontrado, agregando event listener');
+            copyBtn.addEventListener('click', function(e) {
+                console.log('Botón clickeado');
+                e.preventDefault();
+                copyToClipboard();
+            });
+        } else {
+            console.error('Botón de copiar no encontrado');
+        }
+    });
+
+    async function copyToClipboard() {
+        console.log('Función copyToClipboard ejecutada');
+        const codigo = document.getElementById('codigoCita').textContent;
+        console.log('Código a copiar:', codigo);
+        const btn = document.getElementById('copyBtn');
+        const btnText = document.getElementById('btnText');
+        const toast = document.getElementById('toast');
+
+        // Verificar si estamos en un contexto seguro y si la API está disponible
+        console.log('Contexto seguro:', window.isSecureContext);
+        console.log('navigator.clipboard disponible:', !!navigator.clipboard);
+        
+        if (navigator.clipboard && window.isSecureContext) {
+            try {
+                console.log('Intentando usar Clipboard API...');
+                await navigator.clipboard.writeText(codigo);
+                console.log('Clipboard API exitosa');
+                showSuccessMessage();
+                createSuccessParticles();
+                return;
+            } catch (err) {
+                console.log('Clipboard API falló:', err);
+            }
+        }
+        
+        // Usar método de fallback (funciona en HTTP)
+        console.log('Usando método de fallback...');
+        fallbackCopyToClipboard(codigo);
+    }
+
+    // Función de respaldo para copiar al portapapeles (funciona en HTTP)
+    function fallbackCopyToClipboard(text) {
+        console.log('Ejecutando fallbackCopyToClipboard con texto:', text);
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        textArea.style.opacity = '0';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        try {
+            console.log('Intentando execCommand copy...');
+            const successful = document.execCommand('copy');
+            console.log('execCommand resultado:', successful);
+            if (successful) {
+                console.log('Copia exitosa con execCommand');
+                showSuccessMessage();
+                createSuccessParticles();
+            } else {
+                throw new Error('execCommand failed');
+            }
+        } catch (err) {
+            console.error('Error al copiar con execCommand:', err);
+            // Como último recurso, seleccionar el código para que el usuario lo copie manualmente
+            selectCodeText();
+            alert('Por favor, copia el código manualmente usando Ctrl+C (o Cmd+C en Mac)');
+        }
+        
+        document.body.removeChild(textArea);
+    }
+
+    // Función para seleccionar el texto del código
+    function selectCodeText() {
+        const codigoElement = document.getElementById('codigoCita');
+        if (window.getSelection) {
+            const selection = window.getSelection();
+            const range = document.createRange();
+            range.selectNodeContents(codigoElement);
+            selection.removeAllRanges();
+            selection.addRange(range);
+        }
+    }
+
+    function showSuccessMessage() {
+        console.log('Mostrando mensaje de éxito');
+        const btn = document.getElementById('copyBtn');
+        const btnText = document.getElementById('btnText');
+        const toast = document.getElementById('toast');
+        
+        if (!btn || !btnText || !toast) {
+            console.error('Elementos no encontrados:', {btn: !!btn, btnText: !!btnText, toast: !!toast});
+            return;
+        }
+        
+        // Cambiar el estado del botón
+        btn.classList.add('copied');
+        btnText.textContent = '✓ ¡Copiado!';
+        
+        // Mostrar toast notification
+        toast.classList.add('show');
+        
+        // Restaurar el botón después de 2 segundos
+        setTimeout(() => {
+            btn.classList.remove('copied');
+            btnText.textContent = '📋 Copiar Código';
+        }, 2000);
+        
+        // Ocultar toast después de 3 segundos
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+
+    // Crear partículas de éxito
+    function createSuccessParticles() {
+        const container = document.body;
+        const colors = ['#d4af37', '#f4d03f', '#28a745', '#20c997'];
+        
+        for (let i = 0; i < 12; i++) {
+            setTimeout(() => {
+                const particle = document.createElement('div');
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                particle.style = `
+                    position: fixed;
+                    width: 8px;
+                    height: 8px;
+                    background: ${color};
+                    border-radius: 50%;
+                    pointer-events: none;
+                    left: 50%;
+                    top: 50%;
+                    z-index: 1000;
+                    animation: explode ${1 + Math.random()}s ease-out forwards;
+                `;
+                
+                container.appendChild(particle);
+                
+                setTimeout(() => {
+                    particle.remove();
+                }, 2000);
+            }, i * 100);
+        }
+    }
+
+    // Agregar animación CSS para las partículas
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes explode {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(${-200 + Math.random() * 400}px, ${-200 + Math.random() * 400}px) scale(1);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Agregar efecto de brillo al código cuando se hace hover
+    const codigoDisplay = document.querySelector('.codigo-display');
+    codigoDisplay.addEventListener('mouseenter', () => {
+        codigoDisplay.style.transform = 'scale(1.02)';
+    });
+    
+    codigoDisplay.addEventListener('mouseleave', () => {
+        codigoDisplay.style.transform = 'scale(1)';
+    });
+
+    // Función para generar partículas flotantes periódicamente
+    function createFloatingParticle() {
+        const container = document.body;
+        const particle = document.createElement('div');
+        
+        particle.style = `
+            position: fixed;
+            width: 3px;
+            height: 3px;
+            background: #d4af37;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.2;
+            left: ${Math.random() * 100}%;
+            top: 100%;
+            z-index: -1;
+            animation: floatUp ${8 + Math.random() * 4}s linear forwards;
+        `;
+        
+        container.appendChild(particle);
+        
+        setTimeout(() => {
+            particle.remove();
+        }, 12000);
+    }
+
+    // Crear partículas cada 4 segundos
+    setInterval(createFloatingParticle, 4000);
+
+    // Agregar animación para partículas flotantes
+    const floatStyle = document.createElement('style');
+    floatStyle.textContent = `
+        @keyframes floatUp {
+            to {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(floatStyle);
+</script>
+
+{% endblock extra_js %}
