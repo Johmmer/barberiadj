@@ -1,0 +1,451 @@
+        /* Página Estado de Cita - Barbería Premium */
+
+        /* Container principal */
+        .cita-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            padding: 120px 30px 80px;
+            color: #fff;
+        }
+
+        .cita-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 50px 40px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .cita-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.05), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 10s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: rotate(45deg) translate(-100%, -100%); }
+            50% { transform: rotate(45deg) translate(100%, 100%); }
+        }
+
+        /* Título principal */
+        .cita-title {
+            font-size: 3rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, #d4af37, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            position: relative;
+        }
+
+        .cita-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(45deg, #d4af37, #f4d03f);
+            border-radius: 2px;
+        }
+
+        /* Card de información */
+        .cita-info-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 35px 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            position: relative;
+            transition: all 0.3s ease;
+            animation: slideInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .cita-info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.15);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .cita-info-card:nth-child(1) { animation-delay: 0.2s; }
+        .cita-info-card:nth-child(2) { animation-delay: 0.4s; }
+        .cita-info-card:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes slideInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Grid de información */
+        .cita-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .detail-label {
+            font-size: 0.9rem;
+            color: #d4af37;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .detail-value {
+            font-size: 1.2rem;
+            color: #fff;
+            font-weight: 500;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid #d4af37;
+            transition: all 0.3s ease;
+        }
+
+        .detail-item:hover .detail-value {
+            background: rgba(255, 255, 255, 0.15);
+            border-left-color: #f4d03f;
+        }
+
+        /* Código de cita destacado */
+        .codigo-cita {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .codigo-cita .detail-label {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .codigo-cita .detail-value {
+            display: inline-block;
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #d4af37, #f4d03f);
+            color: #000;
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Estado de la cita */
+        .estado-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .estado-badge.pendiente {
+            background: linear-gradient(45deg, #ffc107, #ffeb3b);
+            color: #000;
+            box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+        }
+
+        .estado-badge.confirmada {
+            background: linear-gradient(45deg, #28a745, #4caf50);
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .estado-badge.completada {
+            background: linear-gradient(45deg, #17a2b8, #20c997);
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(23, 162, 184, 0.3);
+        }
+
+        .estado-badge.cancelada {
+            background: linear-gradient(45deg, #dc3545, #f44336);
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+
+        /* Iconos de estado */
+        .estado-badge::before {
+            font-size: 1.2rem;
+        }
+
+        .estado-badge.pendiente::before {
+            content: '⏳';
+        }
+
+        .estado-badge.confirmada::before {
+            content: '✅';
+        }
+
+        .estado-badge.completada::before {
+            content: '🎉';
+        }
+
+        .estado-badge.cancelada::before {
+            content: '❌';
+        }
+
+        /* Botones de acción */
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .bttn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bttn-edit {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: #fff;
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+        }
+
+        .bttn-edit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 123, 255, 0.4);
+        }
+
+        .bttn-cancel {
+            background: rgba(220, 53, 69, 0.2);
+            color: #dc3545;
+            border: 2px solid #dc3545;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .bttn-cancel:hover {
+            background: rgba(220, 53, 69, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(220, 53, 69, 0.2);
+        }
+
+        .bttn-back {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 2px solid rgba(212, 175, 55, 0.5);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .bttn-back:hover {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: #d4af37;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.2);
+        }
+
+        /* Efectos de ripple */
+        .bttn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.6s ease;
+        }
+
+        .bttn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Iconos en botones */
+        .bttn-edit::after {
+            content: '✏️';
+            font-size: 1rem;
+        }
+
+        .bttn-cancel::after {
+            content: '🗑️';
+            font-size: 1rem;
+        }
+
+        .bttn-back::after {
+            content: '🏠';
+            font-size: 1rem;
+        }
+
+        /* Decoración lateral */
+        .cita-decoration {
+            position: absolute;
+            top: 15%;
+            right: -60px;
+            font-size: 8rem;
+            color: #d4af37;
+            opacity: 0.08;
+            transform: rotate(20deg);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: rotate(20deg) translateY(0); }
+            50% { transform: rotate(20deg) translateY(-30px); }
+        }
+
+        /* Loading states */
+        .bttn.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .bttn.loading::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            margin: auto;
+            border: 2px solid transparent;
+            border-top-color: currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .cita-container {
+                padding: 100px 20px 60px;
+            }
+            
+            .cita-wrapper {
+                padding: 35px 25px;
+            }
+            
+            .cita-title {
+                font-size: 2.5rem;
+                margin-bottom: 30px;
+            }
+            
+            .cita-details-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .codigo-cita .detail-value {
+                font-size: 1.5rem;
+                padding: 12px 25px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .bttn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+            
+            .cita-decoration {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cita-container {
+                padding: 90px 15px 50px;
+            }
+            
+            .cita-wrapper {
+                padding: 25px 20px;
+            }
+            
+            .cita-title {
+                font-size: 2rem;
+                margin-bottom: 25px;
+            }
+            
+            .detail-value {
+                font-size: 1.1rem;
+                padding: 8px 12px;
+            }
+            
+            .codigo-cita .detail-value {
+                font-size: 1.3rem;
+                padding: 10px 20px;
+                letter-spacing: 1px;
+            }
+            
+            .bttn {
+                padding: 12px 25px;
+                font-size: 0.9rem;
+            }
+            
+            .estado-badge {
+                font-size: 0.9rem;
+                padding: 10px 16px;
+            }
+        }
+
+        /* Transiciones suaves */
+        * {
+            transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+        }
