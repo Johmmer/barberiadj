@@ -452,3 +452,35 @@ main::before {
         line-height: 1.4 !important;
     }
 }
+
+@-moz-document url-prefix() {
+    /* Estilos SOLO para Firefox */
+    
+    @media screen and (max-width: 768px) {
+        .codigo-container {
+            padding: 35px 15px !important;
+            margin-left: 10px !important;
+            margin-right: 10px !important;
+            margin-top: 15px !important;
+            margin-bottom: 15px !important;
+            max-width: unset !important;
+            width: unset !important;
+            left: 0 !important;
+            right: 0 !important;
+            position: relative !important;
+            transform: none !important;
+        }
+    }
+    
+    @media screen and (max-width: 480px) {
+        .codigo-container {
+            padding: 25px 10px !important;
+            margin-left: 5px !important;
+            margin-right: 5px !important;
+            margin-top: 10px !important;
+            margin-bottom: 10px !important;
+            max-width: unset !important;
+            width: unset !important;
+        }
+    }
+}
