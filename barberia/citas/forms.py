@@ -25,7 +25,7 @@ class CitaForm(forms.ModelForm):
             'fecha': 'Fecha y Hora',
             'barbero': 'Barbero',
             'servicio': 'Servicio',
-            'cliente_nombre': 'Nombre del Cliente',
+            'cliente_nombre': 'Nombre Completo del Cliente',
             'cliente_telefono': 'Teléfono del Cliente',
         }
     def clean(self):
