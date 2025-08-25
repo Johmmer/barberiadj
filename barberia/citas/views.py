@@ -3,6 +3,14 @@ from django.http import HttpResponse
 from django.urls import reverse
 from .models import Barbero, Servicio, Cita
 from .forms import CitaForm
+from django.core.mail import send_mail
+
+def enviar_correo(destino):
+    asunto = 'Nueva cita agendada'
+    mensaje = 'Alguien ha solicitado una cita con usted, entre a su panel administrativo para confirmarla'
+    destinatario = [destino]
+    
+    send_mail(asunto, mensaje, 'johmmer300@gmail.com', destinatario)
 
 # pagina principal de citas
 def citas(request):
@@ -14,6 +22,10 @@ def crear_cita(request):
         form = CitaForm(request.POST)
         if form.is_valid(): 
             form_object = form.save()
+            barbero = form_object.barbero.id
+            get_barbero = get_object_or_404(Barbero, id=barbero)
+            barbero_email = get_barbero.email
+            enviar_correo(barbero_email)
             return redirect('cita_creada', cita_id=form_object.id) 
         else:
             return render(request, 'citas/crear_cita.html', {'form': form})
